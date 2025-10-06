@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      h1 {
+        text-align: center;
+      }
+      .cardContainer {
+        /* Add shadows to create the "card" effect */
+        display: inline-flex;
+        flex-wrap: wrap;
+      }
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        border-radius: 5px; /* Rounded corners */
+        width: 30%;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ri an mort charactr</h1>
+    <div class="characterList cardContainer"></div>
+  </body>
+  <script>
+    const characterList = document.querySelector(".characterList");
+    function cardMaker(character) {
+      let container = document.createElement("div");
+      let characterCard = document.createElement("div");
+      let characterImage = document.createElement("img");
+      let br = document.createElement("br");
+      container.classList.add("card");
+      characterImage.src = character.image;
+      characterImage.style.width = "100%";
+      characterCard.innerHTML = `<p>${character.name}</p><p>Status: ${character.status}</p><p>Species: ${character.species}</p>`;
+      characterList.append(container);
+      container.append(characterImage);
+      container.append(characterCard);
+    }
+    function start() {
+      fetch("https://rickandmortyapi.com/api/character")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          for (character of data.results) {
+            console.log(character);
+            cardMaker(character);
+          }
+        });
+    }
+    start();
+  </script>
+</html>
